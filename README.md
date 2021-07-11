@@ -1,1 +1,2 @@
-ssss
+Reactのチュートリアルの学習を行いました。
+DBはFirestoreを使用しております。
