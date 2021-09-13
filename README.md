@@ -26,6 +26,10 @@ https://firebase.google.com/?hl=ja にて、コンソールへ移動後プロジ
 ![スクリーンショット 2021-09-13 210556](https://user-images.githubusercontent.com/44935028/133080493-9655a40e-4de9-4c1a-8194-ff67c502ba9a.png)  
 
 `.env`へ、ファイアベースの接続情報を入力する  
+![スクリーンショット 2021-09-13 211009](https://user-images.githubusercontent.com/44935028/133081056-d71827fb-326f-4535-884d-369f4dce5f1f.png)  
+![スクリーンショット 2021-09-13 211144](https://user-images.githubusercontent.com/44935028/133081250-4f86bfab-23b6-4b73-9564-c5fcd2af2e52.png)  
+
+
 ターミナルにて`npm start`を実行し、画面を起動する `http://localhost:3000/`
 
 
