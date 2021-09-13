@@ -17,7 +17,7 @@
 https://nodejs.org/ja にてNodeをインストールする  
 
 ## 実行方法  
-リポジトリをクローンする　`https://github.com/kenichiiwase/React-todo.git`  
+リポジトリをクローンする　`git clone https://github.com/kenichiiwase/React-todo.git`  
 モジュールをインストールする　`npm install XXXXX`  
 ターミナルにて`node index.js`を実行し、画面を起動する `http://localhost:3000/`
 
