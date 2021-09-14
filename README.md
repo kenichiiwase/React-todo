@@ -12,7 +12,7 @@ https://nodejs.org/ja にてNodeをインストールする
 
 
 ## 実行方法  
-ターミナルにて`npm install`を実行    
+ターミナルにて、`npm install`を実行    
 
 https://firebase.google.com/?hl=ja にて、コンソールへ移動後プロジェクトを作成  
 ![スクリーンショット 2021-09-13 205415](https://user-images.githubusercontent.com/44935028/133079229-5a84732b-d095-4a19-a98e-0c27eb5816fe.png)  
@@ -28,6 +28,6 @@ https://firebase.google.com/?hl=ja にて、コンソールへ移動後プロジ
 ![スクリーンショット 2021-09-13 211144](https://user-images.githubusercontent.com/44935028/133081250-4f86bfab-23b6-4b73-9564-c5fcd2af2e52.png)  
 
 
-ターミナルにて`npm start`を実行し、画面を起動する `http://localhost:3000/`
+続いて`npm start`を実行し、画面を起動する `http://localhost:3000/`
 
 
