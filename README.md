@@ -17,9 +17,6 @@ https://firebase.google.com/?hl=ja にて、コンソールへ移動後プロジ
 データベースの作成を押下し、コレクションへTasks、フィールドへcompleted,nameを作成  
 ![スクリーンショット 2021-09-13 205708](https://user-images.githubusercontent.com/44935028/133079732-5924ef96-0410-4d16-8caf-c7534ebec734.png)  
 
-設定ボタンを押下し、プロジェクトの設定を選択  
-![スクリーンショット 2021-09-13 210556](https://user-images.githubusercontent.com/44935028/133080493-9655a40e-4de9-4c1a-8194-ff67c502ba9a.png)  
-
 ## 実行方法  
 1. `npm install`を実行    
 2. `.env`ファイルを作成する。  
