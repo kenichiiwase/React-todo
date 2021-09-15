@@ -1,4 +1,4 @@
-# React-todo-app
+# eact-todo-app
 
 ## 機能 
 - タスク登録  
