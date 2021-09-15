@@ -19,8 +19,8 @@ https://firebase.google.com/?hl=ja にて、コンソールへ移動後プロジ
 
 ## 実行方法  
 1. `npm install`を実行    
-2. `.env`ファイルを作成する。  
-3. ファイアベースの接続情報を入力する  
+2. `.env`ファイルを作成  
+3. ファイアベースの接続情報を入力  
 ![スクリーンショット 2021-09-13 211009](https://user-images.githubusercontent.com/44935028/133081056-d71827fb-326f-4535-884d-369f4dce5f1f.png)  
 ![スクリーンショット 2021-09-13 211144](https://user-images.githubusercontent.com/44935028/133081250-4f86bfab-23b6-4b73-9564-c5fcd2af2e52.png)  
 4. `npm start`を実行し、画面を開く     
