@@ -10,6 +10,7 @@
 https://nodejs.org/ja にてNodeをインストールする  
 
 - firebase  
+※実行方法1.後に実施
 https://firebase.google.com/?hl=ja にて、コンソールへ移動後プロジェクトを作成  
 ![スクリーンショット 2021-09-13 205415](https://user-images.githubusercontent.com/44935028/133079229-5a84732b-d095-4a19-a98e-0c27eb5816fe.png)  
 
