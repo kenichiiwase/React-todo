@@ -1,35 +1,46 @@
-# React-todo-app
+# Getting Started with Create React App
 
-## 機能 
-- タスク登録  
-- タスク削除  
-- タスク更新  
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## 環境インストール方法  
-- node  
-https://nodejs.org/ja にてNodeをインストールする  
+## Available Scripts
 
+In the project directory, you can run:
 
+### `yarn start`
 
-## 実行方法  
-リポジトリをクローンする　`git clone https://github.com/kenichiiwase/React-todo.git`  
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-firebaseをインストールする　`npm install firebase`  
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-https://firebase.google.com/?hl=ja にて、コンソールへ移動後プロジェクトを作成  
-![スクリーンショット 2021-09-13 205415](https://user-images.githubusercontent.com/44935028/133079229-5a84732b-d095-4a19-a98e-0c27eb5816fe.png)  
+### `yarn test`
 
-データベースの作成を押下し、コレクションへTasks、フィールドへcompleted,nameを作成  
-![スクリーンショット 2021-09-13 205708](https://user-images.githubusercontent.com/44935028/133079732-5924ef96-0410-4d16-8caf-c7534ebec734.png)  
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-設定ボタンを押下し、プロジェクトの設定を選択  
-![スクリーンショット 2021-09-13 210556](https://user-images.githubusercontent.com/44935028/133080493-9655a40e-4de9-4c1a-8194-ff67c502ba9a.png)  
+### `yarn build`
 
-`.env`へ、ファイアベースの接続情報を入力する  
-![スクリーンショット 2021-09-13 211009](https://user-images.githubusercontent.com/44935028/133081056-d71827fb-326f-4535-884d-369f4dce5f1f.png)  
-![スクリーンショット 2021-09-13 211144](https://user-images.githubusercontent.com/44935028/133081250-4f86bfab-23b6-4b73-9564-c5fcd2af2e52.png)  
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-ターミナルにて`npm start`を実行し、画面を起動する `http://localhost:3000/`
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+### `yarn eject`
 
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
