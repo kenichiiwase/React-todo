@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-function usePrevious(value :boolean) {
+function usePrevious(value: boolean) {
   const ref = useRef(false);
   useEffect(() => {
     ref.current = value;
@@ -9,16 +9,16 @@ function usePrevious(value :boolean) {
 }
 
 type todoProps = {
-  id:string;
-  name:string;
-  completed:boolean;
-  key:string;
-  toggleTaskCompleted(id:string):void
-  deleteTask(id:string):void
-  editTask(id: string,newName: string):void;
-}
+  id: string;
+  name: string;
+  completed: boolean;
+  key: string;
+  toggleTaskCompleted(id: string): void;
+  deleteTask(id: string): void;
+  editTask(id: string, newName: string): void;
+};
 
-export default function Todo(props:todoProps) {
+export default function Todo(props: todoProps) {
   const [isEditing, setEditing] = useState(false);
   const [newName, setNewName] = useState('');
 

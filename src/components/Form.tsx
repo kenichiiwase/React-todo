@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 type formProps = {
-  addTask(name:string):void
-}
+  addTask(name: string): void;
+};
 
-function Form(props:formProps) {
+function Form(props: formProps) {
   const [name, setName] = useState('');
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {

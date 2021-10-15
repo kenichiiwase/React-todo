@@ -1,12 +1,12 @@
 import React from 'react';
 
 type filterProps = {
-  isPressed:any;
-  name:'All'|'Active'|'Completed';
-  setFilter(name:'All'|'Active'|'Completed'):void
-}
+  isPressed: any;
+  name: 'All' | 'Active' | 'Completed';
+  setFilter(name: 'All' | 'Active' | 'Completed'): void;
+};
 
-function FilterButton(props:filterProps) {
+function FilterButton(props: filterProps) {
   return (
     <button
       type="button"

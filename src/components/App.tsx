@@ -3,6 +3,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import Form from './Form';
 import FilterButton from './FilterButton';
 import Todo from './Todo';
+import {
+  collection,
+  onSnapshot,
+  setDoc,
+  deleteDoc,
+  addDoc,
+  doc,
+} from 'firebase/firestore';
 import { db } from '../Firebase';
 
 function usePrevious(value: number) {
@@ -15,23 +23,24 @@ function usePrevious(value: number) {
 
 // All,Active,Completed
 // as const readonly unionと同じ扱い
-const FILTER_KEYS = ['All','Active','Completed'] as const;
+const FILTER_KEYS = ['All', 'Active', 'Completed'] as const;
 
 type FILTER_UNION = typeof FILTER_KEYS[number];
 
-const FILTER_MAP:{[FILTER_KEYS in FILTER_UNION]: any} = {
+const FILTER_MAP: { [FILTER_KEYS in FILTER_UNION]: any } = {
   All: () => true,
-  Active: (task: { completed: boolean; }) => !task.completed,
-  Completed: (task: { completed: boolean; }) => task.completed,
+  Active: (task: { completed: boolean }) => !task.completed,
+  Completed: (task: { completed: boolean }) => task.completed,
 };
 
 function App() {
   const [tasks, setTasks] = useState([{ id: '', name: '', completed: true }]);
   // 初期表示時はAll
   // stringでなくunionでないとだめ'All'|'Active'|'Completed'
-  const [filter, setFilter] = useState<'All'|'Active'|'Completed'>('All');
+  const [filter, setFilter] = useState<'All' | 'Active' | 'Completed'>('All');
+
   useEffect(() => {
-    const unSub = db.collection('Tasks').onSnapshot((snapshot) => {
+    const unSub = onSnapshot(collection(db, 'Tasks'), (snapshot) => {
       setTasks(
         snapshot.docs.map((doc) => ({
           id: doc.id,
@@ -43,28 +52,28 @@ function App() {
     return () => unSub();
   }, []);
 
-  function toggleTaskCompleted(id:string) {
+  function toggleTaskCompleted(id: string) {
     const updatedTasks = tasks.map((task) => {
       // 編集されたタスクと同じIDを持っているIDを持っているか
       if (id === task.id) {
-        db.collection('Tasks')
-          .doc(id)
-          .set({ completed: !task.completed }, { merge: true });
+        const taskRef = doc(db, 'Tasks', id);
+        setDoc(taskRef, { completed: !task.completed }, { merge: true });
       }
       return task;
     });
     setTasks(updatedTasks);
   }
 
-  function deleteTask(id:string) {
-    db.collection('Tasks').doc(id).delete();
+  async function deleteTask(id: string) {
+    await deleteDoc(doc(db, 'Tasks', id));
   }
 
-  function editTask(id:string, newName:string) {
+  function editTask(id: string, newName: string) {
     const editedTaskList = tasks.map((task) => {
       // 編集されたタスクと同じIDを持っている場合
       if (id === task.id) {
-        db.collection('Tasks').doc(id).set({ name: newName }, { merge: true });
+        const taskRef = doc(db, 'Tasks', id);
+        setDoc(taskRef, { name: newName }, { merge: true });
       }
       return task;
     });
@@ -94,8 +103,8 @@ function App() {
     />
   ));
 
-  function addTask(name:string) {
-    db.collection('Tasks').add({
+  function addTask(name: string) {
+    addDoc(collection(db, 'Tasks'), {
       name: name,
       completed: false,
     });
@@ -109,7 +118,7 @@ function App() {
   useEffect(() => {
     if (prevTaskLength) {
       if (tasks.length - prevTaskLength === -1) {
-          listHeadingRef.current.focus();
+        listHeadingRef.current.focus();
       }
     }
   }, [tasks.length, prevTaskLength]);
