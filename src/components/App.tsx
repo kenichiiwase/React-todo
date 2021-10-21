@@ -27,7 +27,9 @@ const FILTER_KEYS = ['All', 'Active', 'Completed'] as const;
 
 type FILTER_UNION = typeof FILTER_KEYS[number];
 
-const FILTER_MAP: { [FILTER_KEYS in FILTER_UNION]: any } = {
+const FILTER_MAP: {
+  [FILTER_KEYS in FILTER_UNION]: (task: { completed: boolean }) => boolean;
+} = {
   All: () => true,
   Active: (task: { completed: boolean }) => !task.completed,
   Completed: (task: { completed: boolean }) => task.completed,
@@ -65,19 +67,46 @@ function App() {
   }
 
   async function deleteTask(id: string) {
-    await deleteDoc(doc(db, 'Tasks', id));
+    try {
+      await deleteDoc(doc(db, 'Tasks', id));
+    } catch (e) {
+      console.error(
+        'error：',
+        'db削除エラー。ネットワーク環境を見直してください。'
+      );
+    }
   }
 
-  function editTask(id: string, newName: string) {
-    const editedTaskList = tasks.map((task) => {
-      // 編集されたタスクと同じIDを持っている場合
-      if (id === task.id) {
-        const taskRef = doc(db, 'Tasks', id);
-        setDoc(taskRef, { name: newName }, { merge: true });
-      }
-      return task;
-    });
-    setTasks(editedTaskList);
+  async function editTask(id: string, newName: string) {
+    let oldName = 'oldName';
+    // この関数を実行したときに実行した瞬間のTasksがわたってくる。
+    setTasks((s) =>
+      s.map((task) => {
+        if (task.id === id) {
+          oldName = task.name;
+          return { ...task, name: newName };
+        }
+        return task;
+      })
+    );
+    try {
+      const taskRef = doc(db, 'Tasks', id);
+      await setDoc(taskRef, { name: newName }, { merge: true });
+    } catch (e) {
+      console.error(
+        'error：',
+        'db更新エラー。ネットワーク環境を見直してください。'
+      );
+
+      setTasks((s) =>
+        s.map((task) => {
+          if (task.id === id) {
+            return { ...task, name: oldName };
+          }
+          return task;
+        })
+      );
+    }
   }
 
   const taskList = tasks
@@ -103,11 +132,18 @@ function App() {
     />
   ));
 
-  function addTask(name: string) {
-    addDoc(collection(db, 'Tasks'), {
-      name: name,
-      completed: false,
-    });
+  async function addTask(name: string) {
+    try {
+      await addDoc(collection(db, 'Tasks'), {
+        name: name,
+        completed: false,
+      });
+    } catch (e) {
+      console.error(
+        'error：',
+        'db登録エラー。ネットワーク環境を見直してください。'
+      );
+    }
   }
 
   const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
