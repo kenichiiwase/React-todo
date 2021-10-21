@@ -7,7 +7,7 @@ type formProps = {
 function Form(props: formProps) {
   const [name, setName] = useState('');
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!name.trim()) {
       return;

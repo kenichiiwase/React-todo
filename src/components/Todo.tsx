@@ -19,26 +19,34 @@ type todoProps = {
 };
 
 export default function Todo(props: todoProps) {
-  const [isEditing, setEditing] = useState(false);
+  const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState('');
-
+  const [isSaving, setIsSaving] = useState(false);
   const editFieldRef = useRef(null);
   const editButtonRef = useRef(null);
 
-  const wasEditing = usePrevious(isEditing);
+  const wasEditing = usePrevious(editMode);
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setNewName(event.target.value);
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function delSubmit(): Promise<void> {
+    props.deleteTask(props.id);
+  }
+
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ): Promise<void> {
     event.preventDefault();
     if (!newName.trim()) {
       return;
     }
+    setIsSaving(true);
     props.editTask(props.id, newName);
+    setIsSaving(false);
     setNewName('');
-    setEditing(false);
+    setEditMode(false);
   }
 
   // 更新中の場合
@@ -61,12 +69,16 @@ export default function Todo(props: todoProps) {
         <button
           type="button"
           className="btn todo-cancel"
-          onClick={() => setEditing(false)}
+          onClick={() => setEditMode(false)}
         >
           Cancel
           <span className="visually-hidden">renaming {props.name}</span>
         </button>
-        <button type="submit" className="btn btn__primary todo-edit">
+        <button
+          type="submit"
+          disabled={isSaving}
+          className="btn btn__primary todo-edit"
+        >
           Save
           <span className="visually-hidden">new name for {props.name}</span>
         </button>
@@ -92,7 +104,7 @@ export default function Todo(props: todoProps) {
         <button
           type="button"
           className="btn"
-          onClick={() => setEditing(true)}
+          onClick={() => setEditMode(true)}
           ref={editButtonRef}
         >
           Edit <span className="visually-hidden">{props.name}</span>
@@ -100,7 +112,7 @@ export default function Todo(props: todoProps) {
         <button
           type="button"
           className="btn btn__danger"
-          onClick={() => props.deleteTask(props.id)}
+          onClick={() => delSubmit()}
         >
           Delete <span className="visually-hidden">{props.name}</span>
         </button>
@@ -109,13 +121,13 @@ export default function Todo(props: todoProps) {
   );
 
   useEffect(() => {
-    if (!wasEditing && isEditing) {
+    if (!wasEditing && editMode) {
       editFieldRef.current.focus();
     }
-    if (wasEditing && !isEditing) {
+    if (wasEditing && !editMode) {
       editButtonRef.current.focus();
     }
-  }, [wasEditing, isEditing]);
+  }, [wasEditing, editMode]);
 
-  return <li className="todo">{isEditing ? editingTemplate : viewTemplate}</li>;
+  return <li className="todo">{editMode ? editingTemplate : viewTemplate}</li>;
 }
