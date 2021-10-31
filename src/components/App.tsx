@@ -12,6 +12,8 @@ import {
   doc,
 } from 'firebase/firestore';
 import { db } from '../Firebase';
+import { Flex, Heading, Box, createStandaloneToast } from '@chakra-ui/react';
+const toast = createStandaloneToast();
 
 function usePrevious(value: number) {
   const ref = React.useRef(0);
@@ -43,13 +45,19 @@ function App() {
 
   useEffect(() => {
     const unSub = onSnapshot(collection(db, 'Tasks'), (snapshot) => {
-      setTasks(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          name: doc.data().name,
-          completed: doc.data().completed,
-        }))
-      );
+      try {
+        setTasks(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            name: doc.data().name,
+            completed: doc.data().completed,
+          }))
+        );
+      } catch {
+        toast({
+          title: 'db取得エラー。ネットワーク接続を見直してください',
+        });
+      }
     });
     return () => unSub();
   }, []);
@@ -58,8 +66,14 @@ function App() {
     const updatedTasks = tasks.map((task) => {
       // 編集されたタスクと同じIDを持っているIDを持っているか
       if (id === task.id) {
-        const taskRef = doc(db, 'Tasks', id);
-        setDoc(taskRef, { completed: !task.completed }, { merge: true });
+        try {
+          const taskRef = doc(db, 'Tasks', id);
+          setDoc(taskRef, { completed: !task.completed }, { merge: true });
+        } catch {
+          toast({
+            title: 'db更新エラー。ネットワーク接続を見直してください',
+          });
+        }
       }
       return task;
     });
@@ -70,10 +84,9 @@ function App() {
     try {
       await deleteDoc(doc(db, 'Tasks', id));
     } catch (e) {
-      console.error(
-        'error：',
-        'db削除エラー。ネットワーク環境を見直してください。'
-      );
+      toast({
+        title: 'db削除エラー。ネットワーク接続を見直してください',
+      });
     }
   }
 
@@ -93,10 +106,9 @@ function App() {
       const taskRef = doc(db, 'Tasks', id);
       await setDoc(taskRef, { name: newName }, { merge: true });
     } catch (e) {
-      console.error(
-        'error：',
-        'db更新エラー。ネットワーク環境を見直してください。'
-      );
+      toast({
+        title: 'db更新エラー。ネットワーク接続を見直してください',
+      });
 
       setTasks((s) =>
         s.map((task) => {
@@ -139,10 +151,9 @@ function App() {
         completed: false,
       });
     } catch (e) {
-      console.error(
-        'error：',
-        'db登録エラー。ネットワーク環境を見直してください。'
-      );
+      toast({
+        title: 'db登録エラー。ネットワーク接続を見直してください',
+      });
     }
   }
 
@@ -160,20 +171,28 @@ function App() {
   }, [tasks.length, prevTaskLength]);
 
   return (
-    <div className="todoapp stack-large">
-      <Form addTask={addTask} />
-      <div className="filters btn-group stack-exception">{filterList}</div>
-      <h2 id="list-heading" ref={listHeadingRef}>
-        {headingText}
-      </h2>
-      <ul
-        role="list"
-        className="todo-list stack-large stack-exception"
-        aria-labelledby="list-heading"
-      >
-        {taskList}
-      </ul>
-    </div>
+    <Flex height="100vh" justify="center">
+      <div>
+        <Flex direction="column" background="white" p={12} rounded={6}>
+          <Heading mb={8}>
+            <Form addTask={addTask} />
+          </Heading>
+          <div>{filterList}</div>
+          <Box
+            bgGradient="linear(to-l, #c2ca28, #28caca)"
+            bgClip="text"
+            fontSize="4xl"
+            fontWeight="extrabold"
+            ref={listHeadingRef}
+          >
+            {headingText}
+          </Box>
+          <ul role="list" aria-labelledby="list-heading">
+            {taskList}
+          </ul>
+        </Flex>
+      </div>
+    </Flex>
   );
 }
 
