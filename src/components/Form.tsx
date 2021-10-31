@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Button, Box, Input } from '@chakra-ui/react';
 
 type formProps = {
   addTask(name: string): void;
@@ -22,24 +23,36 @@ function Form(props: formProps) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2 className="label-wrapper">
-        <label htmlFor="new-todo-input" className="label__lg">
-          Todo-App
-        </label>
-      </h2>
+      <Box
+        bgGradient="linear(to-l, #43ca28, #28caca)"
+        bgClip="text"
+        fontSize="6xl"
+        fontWeight="extrabold"
+        mb="30px"
+      >
+        Todo-App
+      </Box>
 
-      <input
+      <Input
         type="text"
-        id="new-todo-input"
-        className="input input__lg"
         name="text"
         autoComplete="off"
         value={name}
         onChange={handleChange}
+        w={500}
+        border="2px"
+        variant="outline"
+        placeholder="Input task here"
       />
-      <button type="submit" className="btn btn__primary btn__lg">
+      <Button
+        type="submit"
+        background={'cyan.500'}
+        color={'white'}
+        ml="10px"
+        mt="5px"
+      >
         Add
-      </button>
+      </Button>
     </form>
   );
 }

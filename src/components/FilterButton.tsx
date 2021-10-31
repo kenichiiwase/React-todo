@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from '@chakra-ui/react';
 
 type filterProps = {
   isPressed: any;
@@ -8,16 +9,20 @@ type filterProps = {
 
 function FilterButton(props: filterProps) {
   return (
-    <button
+    <Button
+      borderColor="green.400"
+      color="green.400"
+      variant="outline"
       type="button"
-      className="btn toggle-btn"
       aria-pressed={props.isPressed}
       onClick={() => props.setFilter(props.name)}
+      w="30%"
+      h="40px"
+      mr="15px"
+      size="lg"
     >
-      <span className="visually-hidden">Show </span>
       <span>{props.name}</span>
-      <span className="visually-hidden"> tasks</span>
-    </button>
+    </Button>
   );
 }
 
